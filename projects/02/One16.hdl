@@ -1,0 +1,18 @@
+
+CHIP One16 {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+    Not16 (in=in, out=notIn);
+    Or16 (a=notIn, b=in, out=one);
+    
+
+
+
+    Not (in=in[0], out=notIn0);
+    Or (a=in[0], b=notIn0, out=One);
+    Not16 (in=in, out=notIn16);
+    And16 (a=in, b=notIn16, out=Zero);
+    Add16 (a=Zero[0], b=One, out=out);
+}

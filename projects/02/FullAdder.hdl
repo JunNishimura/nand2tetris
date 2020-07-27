@@ -12,6 +12,18 @@ CHIP FullAdder {
     OUT sum,     // Right bit of a + b + c
         carry;   // Left bit of a + b + c
 
+    // treat "a" as the carry from the previous calculation
     PARTS:
-    // Put you code here:
+    // pattern 1
+    // And (a=b, b=c, out=bANDc);
+    // Or (a=b, b=c, out=bORc);
+    // Mux (a=bANDc, b=bORc, sel=a, out=carry);
+    // Xor (a=b, b=c, out=bXORc);
+    // Not (in=bXORc, out=notXOR);
+    // Mux (a=bXORc, b=notXOR, sel=a, out=sum);
+
+    // pattern 2
+    HalfAdder (a=a, b=b, sum=sum1, carry=carry1);
+    HalfAdder (a=sum1, b=c, sum=sum, carry=carry2); 
+    Or (a=carry1, b=carry2, out=carry);   
 }
