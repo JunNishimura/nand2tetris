@@ -12,3 +12,46 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+    @8192       // 32 * 256 = 8192
+    D=A
+    @size
+    M=D 
+(MAIN) 
+    @offset
+    M=0
+    @KBD
+    D=M 
+    @WHITE
+    D;JEQ       // if (KBD == 0) goto WHITE // when no  key is pressed 
+(BLACK)     
+    @offset
+    D=M         // D=offset
+    @size
+    D=D-M       // D=offset-size 
+    @MAIN
+    D;JEQ       // if (offset-size) == 0 goto MAIN // finish looping
+    @offset
+    D=M         // D=offset
+    @SCREEN
+    A=A+D
+    M=-1        // set black 
+    @offset
+    M=M+1       // increase offset 
+    @BLACK
+    0;JMP       // jump to BLACK
+(WHITE)
+    @offset
+    D=M         // D=offset 
+    @size
+    D=D-M       // D=offset-size
+    @MAIN 
+    D;JEQ       // if (offset-size) == 0 goto MAIN // finish looping 
+    @offset 
+    D=M         // D=offset
+    @SCREEN
+    A=A+D
+    M=0         // set white 
+    @offset
+    M=M+1       // increase offset 
+    @WHITE
+    0;JMP       // jump to WHITE
